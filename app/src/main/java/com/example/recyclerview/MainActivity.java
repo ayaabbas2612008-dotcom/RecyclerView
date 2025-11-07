@@ -23,12 +23,22 @@ public class MainActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
 
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+            return insets;
+        });
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
         recyclerView = findViewById(R.id.rvFriends);
 
         // use this setting to improve performance if you know the changes
         // in content do not change the layout size of the RecyclerView
         recyclerView.setHasFixedSize(true);
-        myDataset = new  String[]{"Aya" , "Bylsan" , "Waseela", "Raheek"};
+        myDataset = new  String[]{"Aya" , "Bylsan" , "Waseela", "Raheek", "Shams", "Mariam", "Jana"};
 
         // use a linear layout manager
         layoutManager = new LinearLayoutManager(this);
@@ -36,11 +46,5 @@ public class MainActivity extends AppCompatActivity {
 
         mAdapter = new MyAdapter(myDataset);
         recyclerView.setAdapter(mAdapter);
-
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
     }
 }
